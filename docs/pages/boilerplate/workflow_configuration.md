@@ -7,7 +7,6 @@ Once, markdown docs are running and building successfully in local, we can then 
 Find the definition of automated workflow in file `.github/workflows/build-documentation-site.yml`. Here, each section of that file is described:
 
 1. When this workflow will be triggered:
-
    ```yml
    on:
    push:
@@ -20,7 +19,6 @@ Find the definition of automated workflow in file `.github/workflows/build-docum
        - "docs/**"
    workflow_dispatch:
    ```
-
    This defines that workflow will be triggered when any push is made on the main branch or a pull_request is made on the same, additionally, it also checks if `docs` directory is changed or not. This also supports the `worflow_dispatch` which enables us to run this workflow on the click of a button.
 
 2. Add permissions to enable deployment to Github pages:

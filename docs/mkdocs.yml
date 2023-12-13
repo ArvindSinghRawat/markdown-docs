@@ -10,3 +10,12 @@ edit_uri_template: edit/main/docs/{path}
 
 docs_dir: pages
 site_dir: site
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences

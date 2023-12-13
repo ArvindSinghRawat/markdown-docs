@@ -9,6 +9,7 @@ mkdocs==1.5.3
 packaging==23.2
 pathspec==0.12.1
 platformdirs==4.1.0
+pymdown-extensions==10.5
 python-dateutil==2.8.2
 PyYAML==6.0.1
 pyyaml_env_tag==0.1
