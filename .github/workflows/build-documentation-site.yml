@@ -8,20 +8,6 @@ on:
 
   workflow_dispatch:
 
-inputs:
-  name:
-    description: 'Artifact name'
-    required: false
-    default: 'github-pages'
-  path:
-    description: "Path of the directory containing the static assets."
-    required: true
-    default: "docs/site/"
-  retention-days:
-    description: "Duration after which artifact will expire in days."
-    required: false
-    default: "1"
-
 jobs:
   build-documentation-site:
     runs-on: ubuntu-latest
@@ -44,7 +30,7 @@ jobs:
 
       - name: 'Fix permissions'
         run: |
-          chmod -c -R +rX "$INPUT_PATH" | while read line; do
+          chmod -c -R +rX "docs/site/" | while read line; do
             echo "::warning title=Invalid file permissions automatically fixed::$line"
           done
 
@@ -52,20 +38,20 @@ jobs:
         run: |
           tar \
             --dereference --hard-dereference \
-            --directory "$INPUT_PATH" \
+            --directory "docs/site/" \
             -cvf "$RUNNER_TEMP/artifact.tar" \
             --exclude=.git \
             --exclude=.github \
             .
         env:
-          INPUT_PATH: ${{ inputs.path }}
+          INPUT_PATH: docs/site/
 
       - name: 'Upload artifact'
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ inputs.name }}
+          name: github-pages
           path: ${{ runner.temp }}/artifact.tar
-          retention-days: ${{ inputs.retention-days }}
+          retention-days: 1
           if-no-files-found: error
 
       - name: 'Deploy to GitHub Pages'
