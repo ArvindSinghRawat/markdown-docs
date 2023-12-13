@@ -8,6 +8,9 @@ on:
 
   workflow_dispatch:
 
+permissions:
+  id-token: write
+
 jobs:
   build-documentation-site:
     runs-on: ubuntu-latest
