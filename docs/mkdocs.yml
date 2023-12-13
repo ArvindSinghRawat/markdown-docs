@@ -1,0 +1,12 @@
+site_name: Markdown Documentation Example
+site_author: Arvind Singh Rawat
+site_description: >-
+  This project acts as an example of how documentation can be added to a python project and can be bundled with the project itself.
+
+repo_name: markdown-docs
+repo_url: https://github.com/ArvindSinghRawat/markdown-docs
+
+edit_uri_template: edit/main/docs/{path}
+
+docs_dir: pages
+site_dir: site
