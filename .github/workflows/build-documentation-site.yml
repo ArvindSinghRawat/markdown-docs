@@ -1,0 +1,64 @@
+name: 'Build Documentation Site'
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+
+jobs:
+  build-documentation-site:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: 'Checkout Code'
+        uses: actions/checkout@v4
+
+      - name: 'List files'
+        run: ls -al
+
+      - name: 'Setup Python'
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: 'Install dependencies'
+        run: pip install -r docs/requirements.txt
+
+      - name: 'Build Site'
+        run: mkdocs build -f docs/mkdocs.yml
+
+      - name: 'Fix permissions'
+        run: |
+          chmod -c -R +rX "docs/site/" | while read line; do
+            echo "::warning title=Invalid file permissions automatically fixed::$line"
+          done
+
+      - name: 'Archive artifact'
+        run: |
+          tar \
+            --dereference --hard-dereference \
+            --directory "docs/site/" \
+            -cvf "$RUNNER_TEMP/artifact.tar" \
+            --exclude=.git \
+            --exclude=.github \
+            .
+        env:
+          INPUT_PATH: docs/site/
+
+      - name: 'Upload artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: github-pages
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 1
+          if-no-files-found: error
+
+      - name: 'Deploy to GitHub Pages'
+        id: deployment
+        uses: actions/deploy-pages@v3
