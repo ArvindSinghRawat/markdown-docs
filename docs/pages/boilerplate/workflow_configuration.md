@@ -2,7 +2,7 @@
 
 Once, markdown docs are running and building successfully in local, we can then write Github actions to prepare the automatic pipeline to automate this process.
 
-## Worfklow definition
+## Workflow definition
 
 Find the definition of automated workflow in file `.github/workflows/build-documentation-site.yml`. Here, each section of that file is described:
 
